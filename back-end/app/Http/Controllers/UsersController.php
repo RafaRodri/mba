@@ -10,19 +10,28 @@ class UsersController extends Controller
 {
     public function index()
     {
-        //$users = User::all();
+        // GET
+        // "Eager loading" para associar com a tabela profile
         $users = User::with('profile')->get();
         return response()->json($users);
     }
     
-    public function show($cpf)
+    public function show($id)
     {    
-        $user = User::with('profile')->where('cpf', $cpf)->first();
+        // GET
+        // Busca por ID, associando com a tabela profile
+        $user = User::with('profile')->find($id);
 
         if(!$user) {
-            return response()->json([
-                'message' => 'Record not found',
-            ], 404);
+            // Caso não encontre por ID, busca por CPF
+            $user = User::with('profile')->where('cpf', $id)->first();
+
+            // Caso ainda não encontre registro, retorna status 404
+            if(!$user) {
+                return response()->json([
+                    'message' => 'Record not found',
+                ], 404);
+            }
         }
 
         return response()->json($user);
@@ -30,39 +39,50 @@ class UsersController extends Controller
     
     public function store(Request $request)
     {
+        // POST
+        // Cadastra novo usuário
         $user = new User();
         $user->fill($request->all());
         $user->save();
 
+        // Retorna com status 201
         return response()->json($user, 201);
     }
 
-    public function update(Request $request, $cpf)
+    public function update(Request $request, $id)
     {
-        $user = User::with('profile')->where('cpf', $cpf);
+        // PUT
+        // Busca usuário por ID
+        $user = User::find($id);
 
+        // Caso não encontre registro, retorna status 404
         if(!$user) {
             return response()->json([
                 'message' => 'Record not found',
             ], 404);
         }
 
-        $user->update($request->all());
+        // Atualiza o usuário
+        $user->fill($request->all());
+        $user->save();
 
         return response()->json($user);
     }
 
-    public function destroy($cpf)
+    public function destroy($id)
     {
-        //$user = User::find($id);
-        $user = User::with('profile')->where('cpf', $cpf)->first();
+        // DELETE
+        // Busca usuário por ID
+        $user = User::find($id);
 
+        // Caso não encontre registro, retorna status 404
         if(!$user) {
             return response()->json([
                 'message' => 'Record not found',
             ], 404);
         }
 
+        // Deleta o usuário
         $user->delete();
     }
 }
