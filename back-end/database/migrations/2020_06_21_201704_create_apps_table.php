@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Migration criada através do CLI, para a tabela profiles
+ * Migration criada através do CLI, para a tabela apps
  */
-class CreateProfilesTable extends Migration
+class CreateAppsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,11 +17,12 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         /**
-        * Configuração da tabela profiles
+        * Configuração da tabela apps
         */
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('apps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titulo', 30);
+            $table->string('nome',30);
+            $table->string('bundle-id',30);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +35,6 @@ class CreateProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('apps');
     }
 }

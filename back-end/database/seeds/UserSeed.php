@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+/**
+ * Seed para testes
+ */
 class UserSeed extends Seeder
 {
     /**
@@ -14,9 +17,9 @@ class UserSeed extends Seeder
         App\User::create([
             'cpf' => 43407226004,
             'nome' => 'João da Silva',
-            'data_nascimento' => '1990-01-01',
+            'data-nascimento' => '1990-01-01',
             'rg' => '454653542',
-            'profile_id' => 3,
+            'profile-id' => 3,
         ]);
     }
 }

@@ -5,19 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Model Profile
+ * Model App
  */
-class Profile extends Model
+class AppUser extends Model
 {
+    // Especificando tabela
+    protected $table    = 'app_user';
+
     // Definindo white lists através do atributo $fillable
-    protected $fillable = ['titulo'];
+    protected $fillable = ['user-id', 'app-id'];
 
     // Explicitar uso do soft delete
     protected $dates = ['deleted_at'];
-
-    // Relacionamento "one-to-many"
-    public function users()
-    {
-        return $this->hasMany('App\User');
-    }
 }

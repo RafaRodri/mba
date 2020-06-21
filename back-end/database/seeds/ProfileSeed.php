@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+/**
+ * Seed para testes
+ */
 class ProfileSeed extends Seeder
 {
     /**

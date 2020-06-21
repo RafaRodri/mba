@@ -11,8 +11,8 @@ class UsersController extends Controller
     public function index()
     {
         // GET
-        // "Eager loading" para associar com a tabela profile
-        $users = User::with('profile')->get();
+        // "Eager loading" para associar com as tabelas profiles e apps
+        $users = User::with('profile','apps')->get();
         return response()->json($users);
     }
     

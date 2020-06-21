@@ -13,9 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+/**
+ * Especificar controllers RESTful que vão lidar com o HTTP para os recursos
+ */
 Route::get('/', function () {
     return response()->json(['message' => 'MBA API', 'status' => 'Connected']);;
 });
 
 Route::resource('users', 'UsersController');
+Route::resource('apps', 'AppsController');
 Route::resource('profiles', 'ProfilesController');
