@@ -15,10 +15,12 @@ class UserSeed extends Seeder
     public function run()
     {
         App\User::create([
-            'cpf' => 43407226004,
             'nome' => 'João da Silva',
-            'data-nascimento' => '1990-01-01',
+            'cpf' => '43407226004',
             'rg' => '454653542',
+            'data-nascimento' => '1990-01-01',
+            'email' => 'teste@email.com',
+            'password' => bcrypt("teste123"),
             'profile-id' => 3,
         ]);
     }

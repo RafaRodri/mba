@@ -12,7 +12,7 @@ class AppUser extends Model
     // Especificando tabela
     protected $table    = 'app_user';
 
-    // Definindo white lists através do atributo $fillable
+    // Campos que podem ser enviados com atribuição em massa
     protected $fillable = ['user-id', 'app-id'];
 
     // Explicitar uso do soft delete

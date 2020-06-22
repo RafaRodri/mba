@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Profile extends Model
 {
-    // Definindo white lists através do atributo $fillable
+    // Campos que podem ser enviados com atribuição em massa
     protected $fillable = ['titulo'];
 
     // Explicitar uso do soft delete

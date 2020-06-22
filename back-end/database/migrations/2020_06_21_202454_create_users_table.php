@@ -20,11 +20,25 @@ class CreateUsersTable extends Migration
         * Configuração da tabela users
         */
         Schema::create('users', function (Blueprint $table) {
+            /**
+             * Dados Pessoais
+             */
             $table->increments('id');
-            $table->string('cpf', 11)->unique();
             $table->string('nome', 255);
-            $table->date('data-nascimento');
+            $table->string('cpf', 11)->unique();
             $table->string('rg', 15);
+            $table->date('data-nascimento');  
+
+            /**
+             * Auth
+             */
+            $table->string('email', 80)->unique();          
+            $table->string('password', 254);
+
+            /**
+             * Redefinição de senha
+             */
+            $table->rememberToken();
             
             /**
              * Chave Estrangeira

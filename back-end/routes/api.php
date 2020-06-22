@@ -16,10 +16,12 @@ use Illuminate\Http\Request;
 /**
  * Especificar controllers RESTful que vão lidar com o HTTP para os recursos
  */
-Route::get('/', function () {
-    return response()->json(['message' => 'MBA API', 'status' => 'Connected']);;
-});
+Route::post('auth/login', 'Api\\AuthController@login');
 
-Route::resource('users', 'UsersController');
-Route::resource('apps', 'AppsController');
-Route::resource('profiles', 'ProfilesController');
+Route::group(['middleware' => ['apiJwt']], function(){
+    Route::post('auth/logout', 'Api\\AuthController@logout');
+
+    Route::apiResource('apps', 'Api\\AppsController');
+    Route::apiResource('users', 'Api\\UsersController');
+    Route::apiResource('profiles', 'Api\\ProfilesController');
+});
