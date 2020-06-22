@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- Menu icon -->
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <!-- Logo -->
+    <ion-title color="mba">
+      <h1>MBA</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Segmentos -->
+  <ion-segment [(ngModel)]="segmento" value="1">
+    <!-- Usuário (gestores e administradores) -->
+    <ion-segment-button value="1">
+      <ion-label>Usuário</ion-label>
+    </ion-segment-button>
+    <!-- Perfil (apenas administradores) -->
+    <ion-segment-button value="2">
+      <ion-label>Perfis</ion-label>
+    </ion-segment-button>
+    <!-- Perfil (apenas administradores) -->
+    <ion-segment-button value="3">
+      <ion-label>Aplicativos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <!-- Apresenta segmento selecionado -->
+  <div [ngSwitch]="segmento">
+    <div *ngSwitchCase="1">
+      <!-- Listagem -->
+      <app-users></app-users>
+    </div>
+    <div *ngSwitchCase="2">
+      Perfis
+    </div>
+    <div *ngSwitchCase="3">
+      Aplicativos
+    </div>
+  </div>
+
+
+</ion-content>
