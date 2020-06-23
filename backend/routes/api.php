@@ -17,12 +17,13 @@ use Illuminate\Http\Request;
  * Especificar controllers RESTful que vão lidar com o HTTP para os recursos
  */
 Route::post('auth/login', 'Api\\AuthController@login');
+//Route::post('auth/login', array('middleware' => 'cors', 'uses' => 'Api\\AuthController@login'));
 
-Route::group(['middleware' => ['apiJwt']], function(){
+//Route::group(['middleware' => ['apiJwt']], function(){
     Route::post('auth/logout', 'Api\\AuthController@logout');
 
     Route::apiResource('apps', 'Api\\AppsController');
     Route::apiResource('profiles', 'Api\\ProfilesController');
-});
+//});
 
 Route::apiResource('users', 'Api\\UsersController');

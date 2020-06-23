@@ -20,10 +20,6 @@
       <ion-label>Usuário</ion-label>
     </ion-segment-button>
     <!-- Perfil (apenas administradores) -->
-    <ion-segment-button value="2">
-      <ion-label>Perfis</ion-label>
-    </ion-segment-button>
-    <!-- Perfil (apenas administradores) -->
     <ion-segment-button value="3">
       <ion-label>Aplicativos</ion-label>
     </ion-segment-button>
@@ -33,14 +29,12 @@
   <!-- Apresenta segmento selecionado -->
   <div [ngSwitch]="segmento">
     <div *ngSwitchCase="1">
-      <!-- Listagem -->
+      <!-- Listagem de Usuários -->
       <app-users></app-users>
     </div>
-    <div *ngSwitchCase="2">
-      Perfis
-    </div>
     <div *ngSwitchCase="3">
-      Aplicativos
+      <!-- Listagem de Usuários -->
+      <app-apps></app-apps>
     </div>
   </div>
 

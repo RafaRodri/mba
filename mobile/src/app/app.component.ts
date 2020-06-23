@@ -18,15 +18,20 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Meus Aplicativos',
+      title: 'Usuários',
+      url: '/users',
+      icon: 'person'
+    },
+    {
+      title: 'Aplicativos',
       url: '/apps',
       icon: 'apps'
     },
-    {
-      title: 'Gerenciar',
-      url: '/manager',
-      icon: 'settings'
-    },
+    //{
+    //  title: 'Gerenciar',
+    //  url: '/manager',
+    //  icon: 'settings'
+    //},
     {
       title: 'Excluir Conta',
       url: '/folder/Outbox',

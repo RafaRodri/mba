@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+// Provider
+import { UsersService } from './users.service'
 
 @Component({
   selector: 'app-users',
@@ -8,10 +11,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
+  users: any[];
 
-  constructor(private alertController: AlertController, private router: Router) { }
+  constructor(private alertController: AlertController, private router: Router,
+    private toastController: ToastController, private usersService: UsersService) { }
 
   ngOnInit() {
+    this.users = [];
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
+    //this.usersService.getAll()
+    //  .then((result: any) => { //populando o objeto
+    //    this.users = result.data;
+    //  })
+    //  .catch(async error => {
+    //    console.log('catch');
+    //    const toast = await this.toastController.create({
+    //      message: 'Erro ao listar os usuários. Erro: ' + error.error,
+    //      position: 'bottom',
+    //      duration: 3000
+    //    });
+    //    await toast.present();
+    //  });
   }
 
   edit(user: any) {

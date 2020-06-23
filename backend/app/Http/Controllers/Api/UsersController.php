@@ -18,19 +18,21 @@ class UsersController extends Controller
     public function index()
     {
         // GET
-        try{
-            // "Eager loading" para associar com as tabelas profiles e apps
-            $users = User::with('profile','apps')->get();
+        $users = User::with('profile','apps')->get();
+        return response()->json($users);
 
-            $api = $this->api($users->count(), $users);
-            $status = 201;
-        }
-        catch (Exception $e){
-            $api = $this->api(0, $e->getMessage());
-            $status = 400;
-        }
+        //try{
+        //    // "Eager loading" para associar com as tabelas profiles e apps
+        //    $users = User::with('profile','apps')->get();
 
-        return response()->json($api, $status);
+        //    $api = $this->api($users->count(), $users);
+        //    $status = 201;
+        //}
+        //catch (Exception $e){
+        //    $api = $this->api(0, $e->getMessage());
+        //    $status = 400;
+        //}
+        //return response()->json($api, $status);
     }
     
     public function show($id)
