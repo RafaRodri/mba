@@ -13,7 +13,7 @@ class AppUser extends Model
     protected $table    = 'app_user';
 
     // Campos que podem ser enviados com atribuição em massa
-    protected $fillable = ['user-id', 'app-id'];
+    protected $fillable = ['user_id', 'app_id'];
 
     // Explicitar uso do soft delete
     protected $dates = ['deleted_at'];

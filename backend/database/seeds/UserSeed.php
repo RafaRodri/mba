@@ -18,10 +18,10 @@ class UserSeed extends Seeder
             'nome' => 'João da Silva',
             'cpf' => '43407226004',
             'rg' => '454653542',
-            'data-nascimento' => '1990-01-01',
-            'email' => 'teste@email.com',
-            'password' => bcrypt("teste123"),
-            'profile-id' => 3,
+            'data_nascimento' => '1990-01-01',
+            'email' => 'admin@mba.com',
+            'password' => bcrypt("123"),
+            'profile_id' => 3,
         ]);
     }
 }

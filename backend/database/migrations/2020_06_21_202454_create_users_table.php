@@ -25,14 +25,14 @@ class CreateUsersTable extends Migration
              */
             $table->increments('id');
             $table->string('nome', 255);
-            $table->string('cpf', 11)->unique()->nullable();
+            $table->string('cpf', 11)->unique();
             $table->string('rg', 15)->nullable();
-            $table->date('data-nascimento')->nullable();
+            $table->date('data_nascimento')->nullable();
 
             /**
              * Auth
              */
-            $table->string('email', 80)->unique();          
+            $table->string('email', 80)->unique()->nullable();          
             $table->string('password', 254);
 
             /**
@@ -43,8 +43,8 @@ class CreateUsersTable extends Migration
             /**
              * Chave Estrangeira
              */
-            $table->integer('profile-id')->unsigned()->default(1);
-            $table->foreign('profile-id')
+            $table->integer('profile_id')->unsigned()->default(1);
+            $table->foreign('profile_id')
                 ->references('id')
                 ->on('profiles')
                 ->onDelete('cascade');  //delete cascade, para quando o ID de referência for deletado

@@ -22,7 +22,7 @@ class CreateAppsTable extends Migration
         Schema::create('apps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome',30);
-            $table->string('bundle-id',30);
+            $table->string('bundle_id',30);
             $table->timestamps();
             $table->softDeletes();
         });

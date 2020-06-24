@@ -20,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'nome', 'email', 'password', 'cpf', 'data-nascimento', 'rg', 'profile-id'
+        'nome', 'email', 'password', 'cpf', 'data_nascimento', 'rg', 'profile_id'
     ];
 
     /**
@@ -54,14 +54,14 @@ class User extends Authenticatable implements JWTSubject
      * Relacionamento "one-to-many (inverso)"
      */
     function profile() {
-        return $this->belongsTo('App\Profile', 'profile-id');
+        return $this->belongsTo('App\Profile', 'profile_id');
     }
 
     /**
      * Relacionamento "many-to-many"
      */
     function apps() {
-        return $this->belongsToMany('App\App', 'app_user', 'user-id', 'app-id');
+        return $this->belongsToMany('App\App', 'app_user', 'user_id', 'app_id');
     }
 
     /**

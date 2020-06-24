@@ -22,14 +22,14 @@ class CreateAppUserTable extends Migration
             /**
              * Chaves Estrangeiras
              */
-            $table->integer('user-id')->unsigned();
-            $table->foreign('user-id')
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');  //delete cascade, para quando o ID de referência for deletado
 
-            $table->integer('app-id')->unsigned();
-            $table->foreign('app-id')
+            $table->integer('app_id')->unsigned();
+            $table->foreign('app_id')
                 ->references('id')
                 ->on('apps')
                 ->onDelete('cascade');  //delete cascade, para quando o ID de referência for deletado

@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
-    public function api($count, $users){
+    public function api($users){
         return [
-            'tot_users' => $count,
+            'tot_users' => $users->count(),
             'users' => $users
         ];
     }
@@ -18,94 +18,123 @@ class UsersController extends Controller
     public function index()
     {
         // GET
-        $users = User::with('profile','apps')->get();
-        return response()->json($users);
+        try{
+            // "Eager loading" para associar com as tabelas profiles e apps
+            $users = User::with('profile','apps')->get();
 
-        //try{
-        //    // "Eager loading" para associar com as tabelas profiles e apps
-        //    $users = User::with('profile','apps')->get();
-
-        //    $api = $this->api($users->count(), $users);
-        //    $status = 201;
-        //}
-        //catch (Exception $e){
-        //    $api = $this->api(0, $e->getMessage());
-        //    $status = 400;
-        //}
-        //return response()->json($api, $status);
+            // Resposta com status 200
+            return response()->json($this->api($users), 200);
+        }
+        catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
     
     public function show($id)
-    {    
+    {
         // GET
-        // Busca por ID, associando com a tabela profile
-        $user = User::with('profile')->find($id);
-
-        if(!$user) {
-            // Caso não encontre por ID, busca por CPF
-            $user = User::with('profile')->where('cpf', $id)->first();
-
-            // Caso ainda não encontre registro, retorna status 404
+        try{
+            // Busca por CPF, associando com as tabelas profiles e apps
+            $user = User::with('profile','apps')->where('cpf', $id)->first();
+    
             if(!$user) {
-                return response()->json([
-                    'message' => 'Record not found',
-                ], 404);
+                // Caso não encontre por CPF, busca por ID
+                $user = User::with('profile','apps')->find($id);
+    
+                // Caso não encontre registro, retorna status 404
+                if(!$user) {                    
+                    return response()->json([
+                        'tot_users' => 0, 
+                        'message' => 'Record not found',
+                    ], 404);
+                }
             }
-        }
 
-        return response()->json($user);
+            // Resposta com status 200
+            return response()->json($user, 200);
+        }
+        catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     } 
     
     public function store(Request $request)
     {
         // POST
-        // Cadastra novo usuário
-        $user = new User();
-        $data = $request->all();
-        $data['password'] = bcrypt($data['password']);
-        //dump($data['password']);
-        //die();
-        $user->fill($data);
-        $user->save();
-
-        // Retorna com status 201
-        return response()->json($user, 201);
+        try{
+            // Cadastra novo usuário
+            $user = new User();
+            $data = $request->all();
+            $data['password'] = bcrypt($data['password']);
+            $user->fill($data);
+            $user->save();
+    
+            // Resposta com status 201
+            return response()->json($user, 201);
+        }
+        catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function update(Request $request, $id)
     {
         // PUT
-        // Busca usuário por ID
-        $user = User::find($id);
-
-        // Caso não encontre registro, retorna status 404
-        if(!$user) {
-            return response()->json([
-                'message' => 'Record not found',
-            ], 404);
+        try{
+            // Busca usuário por ID
+            $user = User::find($id);
+    
+            // Caso não encontre registro, retorna status 404
+            if(!$user) {
+                return response()->json([
+                    'message' => 'Record not found',
+                ], 404);
+            }
+    
+            // Atualiza o usuário
+            $user->fill($request->all());
+            $user->save();
+    
+            // Resposta com status 200
+            return response()->json($user, 200);
         }
-
-        // Atualiza o usuário
-        $user->fill($request->all());
-        $user->save();
-
-        return response()->json($user);
+        catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     public function destroy($id)
     {
         // DELETE
-        // Busca usuário por ID
-        $user = User::find($id);
-
-        // Caso não encontre registro, retorna status 404
-        if(!$user) {
-            return response()->json([
-                'message' => 'Record not found',
-            ], 404);
+        try{
+            // Busca usuário por ID
+            $user = User::find($id);
+    
+            // Caso não encontre registro, retorna status 404
+            if(!$user) {
+                return response()->json([
+                    'message' => 'Record not found',
+                ], 404);
+            }
+    
+            // Deleta o usuário
+            $user->delete();
+    
+            // Resposta com status 202
+            return response()->json(['id' => $id], 202);
         }
-
-        // Deleta o usuário
-        $user->delete();
+        catch (Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }
