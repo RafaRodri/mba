@@ -9,11 +9,16 @@
     <ion-title color="mba">
       <h1>MBA</h1>
     </ion-title>
+
+    <!-- Menu icon -->
+    <ion-buttons slot="end" (click)="logout()">
+      <ion-icon name="log-out-outline" color="danger" slot="start"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Default Item -->
+  <!-- Usuário -->
   <ng-container *ngIf="user">
     <ion-item>
       <ion-label>
@@ -42,8 +47,32 @@
     </ion-item>
   </ng-container>
 
-  <!-- Button -->
-  <ion-button class="ion-margin end" size="small">
-    <ion-icon name="apps-outline"></ion-icon> Meus Aplicativos
-  </ion-button>
+
+  <!-- Buttons -->
+  <ion-grid>
+    <ion-row>
+      <!-- Atualizar Cadastro -->
+      <ion-col>
+        <ion-button size="block" color="secondary" (click)="editar(user.id)">
+          <ion-icon name="arrow-redo-outline" slot="start"></ion-icon> Atualizar Cadastro
+        </ion-button>
+      </ion-col>
+      <!-- Excluir conta -->
+      <ion-col>
+        <ion-button size="block" color="danger" (click)="apagar(user.id)">
+          <ion-icon name="trash-outline" slot="start"></ion-icon> Excluir Conta
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- Meus Aplicativos -->
+      <ion-col>
+        <ion-button size="block">
+          <ion-icon name="apps-outline" slot="start"></ion-icon> Meus Aplicativos
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>

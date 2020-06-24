@@ -8,13 +8,6 @@ use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
-    public function api($users){
-        return [
-            'tot_users' => $users->count(),
-            'users' => $users
-        ];
-    }
-
     public function index()
     {
         // GET
@@ -23,7 +16,7 @@ class UsersController extends Controller
             $users = User::with('profile','apps')->get();
 
             // Resposta com status 200
-            return response()->json($this->api($users), 200);
+            return response()->json($users, 200);
         }
         catch (Exception $e){
             return response()->json([

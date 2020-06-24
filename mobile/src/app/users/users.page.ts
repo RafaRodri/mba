@@ -2,12 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
+// Interfaces
+import { User } from '../interfaces/user';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
+
+  pessoas: User[] = [];
 
   constructor(private alertController: AlertController, private router: Router,
     private toastController: ToastController) { }
@@ -21,12 +26,11 @@ export class UsersPage implements OnInit {
 /////////        // this.pessoas = result;
 
 
-  edit(user: any) {
-    //this.navCtrl.push('UserPage', {user: user});
+  edit(user: User) {
     this.router.navigate(['/user'])
   }
 
-  async delete(user: any) {
+  async presentAlert(user: User) {
     const alert = await this.alertController.create({
       //cssClass: 'my-custom-class',
       header: 'Espera!',

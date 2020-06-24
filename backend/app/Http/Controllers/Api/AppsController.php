@@ -8,13 +8,6 @@ use App\Http\Controllers\Controller;
 
 class AppsController extends Controller
 {
-    public function api($apps){
-        return [
-            'tot_apps' => $apps->count(),
-            'apps' => $apps
-        ];
-    }
-
     public function index()
     {
         // GET
@@ -23,7 +16,7 @@ class AppsController extends Controller
             $apps = App::all();
             
             // Resposta com status 200
-            return response()->json($this->api($apps), 200);
+            return response()->json($apps, 200);
         }
         catch (Exception $e){
             return response()->json([

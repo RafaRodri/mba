@@ -26,21 +26,6 @@ export class AppComponent implements OnInit {
       title: 'Aplicativos',
       url: '/apps',
       icon: 'apps'
-    },
-    //{
-    //  title: 'Gerenciar',
-    //  url: '/manager',
-    //  icon: 'settings'
-    //},
-    {
-      title: 'Excluir Conta',
-      url: '/folder/Outbox',
-      icon: 'trash'
-    },
-    {
-      title: 'Sair',
-      url: '/folder/Outbox',
-      icon: 'log-out'
     }
   ];
 

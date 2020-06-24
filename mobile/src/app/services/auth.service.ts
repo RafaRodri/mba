@@ -9,10 +9,9 @@ import { error } from 'protractor';
 // Interfaces
 import { Login } from '../interfaces/login';
 import { AuthResponse } from '../interfaces/auth-response';
-import { User } from '../interfaces/user';
 
+// Chaves para armazenamento no local storage
 export const TOKEN_AUTH = '_mbaRafael_tokenAuthorization';
-export const USER = '_mbaRafael_user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,34 +20,27 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Acessa endpoint de login
   logar(login: Login) {
     return this.httpClient.post<AuthResponse>(environment.apiUrl + '/auth/login', login);
   }
 
+  // Armazena token em local storage
   setToken(token: string) {
     localStorage.setItem(TOKEN_AUTH, token);
   }
 
+  // Retorna token armazenado em local storage
   getToken() {
     return localStorage.getItem(TOKEN_AUTH);
   }
-
+  
+  // Apaga token do local storage
   clearToken() {
     localStorage.removeItem(TOKEN_AUTH);
   }
 
-  getUserByCpf(cpf: string) {
-    return this.httpClient.get<User>(environment.apiUrl + '/users/' + cpf);
-  }
-
-  setUser(user: User) {
-    localStorage.setItem(USER, JSON.stringify(user));
-  }
-
-  getUser() {
-    return JSON.parse(localStorage.getItem(USER));
-  }
-
+  // Verifica se existe um token armazenado em local storage e retorna um valor boolean
   isLogged() {
     return !!this.getToken();
   }

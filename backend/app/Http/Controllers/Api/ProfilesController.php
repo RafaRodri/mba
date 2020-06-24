@@ -8,13 +8,6 @@ use App\Http\Controllers\Controller;
 
 class ProfilesController extends Controller
 {
-    public function api($profiles){
-        return [
-            'tot_profiles' => $profiles->count(),
-            'profiles' => $profiles
-        ];
-    }
-
     public function index()
     {
         // GET
@@ -23,7 +16,7 @@ class ProfilesController extends Controller
             $profiles = Profile::all();
 
             // Resposta com status 200
-            return response()->json($this->api($profiles), 200);
+            return response()->json($profiles, 200);
         }
         catch (Exception $e){
             return response()->json([

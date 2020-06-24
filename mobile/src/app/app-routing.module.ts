@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
   },
   {
+    path: 'signup',
+    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
     canLoad: [AuthGuard]
@@ -23,7 +27,7 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'user',
+    path: 'user/:id',
     loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule),
     canLoad: [AuthGuard]
   },

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 // Interfaces
 import { Login } from '../interfaces/login';
@@ -18,11 +19,11 @@ import { User } from '../interfaces/user';
 export class LoginPage implements OnInit {
 
   formLogin: FormGroup;
-  pessoas = [];
 
-  // Injeção de dependência: toda service precisa ser injetada (agt depende dela, mas não mantém ela)
-  constructor(private toastController: ToastController, private loadingController: LoadingController,
-    private authService: AuthService, private router: Router, private menuController: MenuController) {
+  constructor(private authService: AuthService, private userService: UserService, private router: Router,
+    private toastController: ToastController, private loadingController: LoadingController, 
+    private menuController: MenuController) {
+    // Criação do nosso form com Reactive forms
     this.formLogin = new FormGroup({
       cpf: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -51,22 +52,21 @@ export class LoginPage implements OnInit {
       this.authService.setToken(result.access_token);
 
       // busca dados do usuário logado
-      this.authService.getUserByCpf(login.cpf)
-        .subscribe((result: User) => {
+      this.userService.getUserByCpf(login.cpf).subscribe((result: User) => {
           // armazena usuário em local storage e redireciona para home
-          this.authService.setUser(result);
+          this.userService.setUser(result);
           this.router.navigate(['home']);
           return;
-        }, (error) => {
-          this.presentToast('Os dados não correspondem a nenhuma conta. Tente novamente ou crie um nova conta.');
+        }, (error) => { // erro na busca de usuário por cpf
+          this.presentToast('Os dados não correspondem a nenhuma conta. <br>Tente novamente ou crie um nova conta.');
         });
 
       // fecha animação de loading e apresenta mensagem ao usuário
       this.loadingController.dismiss();
-    }, (error) => {
+    }, (error) => { // erro na tentativa de login
       // fecha animação de loading e apresenta mensagem ao usuário
       this.loadingController.dismiss();
-      this.presentToast('Os dados não correspondem a nenhuma conta. Tente novamente ou crie um nova conta.');
+      this.presentToast('Os dados não correspondem a nenhuma conta. <br>Tente novamente ou crie um nova conta.');
     });
   }
 

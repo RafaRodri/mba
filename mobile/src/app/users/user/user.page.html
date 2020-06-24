@@ -2,77 +2,66 @@
   <ion-toolbar>
     <!-- Menu icon -->
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="users"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
     <!-- Logo -->
     <ion-title color="mba">
       <h1>MBA</h1>
     </ion-title>
+
+    <!-- Menu icon -->
+    <ion-buttons slot="end" (click)="logout()">
+      <ion-icon name="log-out-outline" color="danger" slot="start"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- User form -->
-  <form class="form">
-    <!-- Nome -->
-    <ion-item>
-      <ion-label position="floating">Nome</ion-label>
-      <ion-input clearInput type="text" name="nome"></ion-input>
-    </ion-item>
 
-    <!-- CPF -->
-    <ion-item>
-      <ion-label position="floating">CPF</ion-label>
-      <ion-input type="text" name="cpf"></ion-input>
-    </ion-item>
+  <!-- Usuário -->
+  <ng-container *ngIf="user">
+    <!-- User form -->
+    <form class="form" [formGroup]="formUser" (ngSubmit)="cadastrar()">
+      <!-- Nome -->
+      <ion-item>
+        <ion-label position="floating" color="primary">Nome</ion-label>
+        <ion-input [(ngModel)]="user.nome" type="text" name="nome" formControlName="nome" clearInput></ion-input>
+      </ion-item>
 
-    <!-- RG -->
-    <ion-item>
-      <ion-label position="floating">RG</ion-label>
-      <ion-input type="text" name="rg"></ion-input>
-    </ion-item>
+      <!-- E-mail -->
+      <ion-item>
+        <ion-label position="floating" color="primary">E-mail</ion-label>
+        <ion-input [(ngModel)]="user.email" type="text" name="email" formControlName="email" clearInput></ion-input>
+      </ion-item>
 
-    <!-- Nascimento -->
-    <ion-item>
-      <ion-label position="floating">Data de Nascimento</ion-label>
-      <ion-datetime name="nascimento" displayFormat="MM DD YY"></ion-datetime>
-    </ion-item>
+      <!-- CPF -->
+      <ion-item>
+        <ion-label position="floating" color="primary">CPF</ion-label>
+        <ion-input [(ngModel)]="user.cpf" type="text" name="cpf" formControlName="cpf" clearInput></ion-input>
+      </ion-item>
 
-    <!-- Perfil -->
-    <ion-item>
-      <ion-label position="floating">Perfil</ion-label>
-      <ion-select>
-        <ion-select-option value="1">Usuário Comum</ion-select-option>
-        <ion-select-option value="2">Gestor</ion-select-option>
-        <ion-select-option value="3">Administrador</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <!-- RG -->
+      <ion-item>
+        <ion-label position="floating" color="primary">RG</ion-label>
+        <ion-input [(ngModel)]="user.rg" type="text" name="rg" formControlName="rg" clearInput></ion-input>
+      </ion-item>
 
-    <!-- Aplicativos -->
-    <ion-item>
-      <ion-label position="floating">Aplicativos</ion-label>
-      <ion-select multiple="true">
-        <ion-select-option value="1">Aplicativo A</ion-select-option>
-        <ion-select-option value="2">Aplicativo B</ion-select-option>
-        <ion-select-option value="3">Aplicativo C</ion-select-option>
-        <ion-select-option value="4">Aplicativo D</ion-select-option>
-        <ion-select-option value="5">Aplicativo E</ion-select-option>
-        <ion-select-option value="6">Aplicativo F</ion-select-option>
-        <ion-select-option value="7">Aplicativo G</ion-select-option>
-        <ion-select-option value="8">Aplicativo H</ion-select-option>
-        <ion-select-option value="9">Aplicativo I</ion-select-option>
-        <ion-select-option value="10">Aplicativo J</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </form>
+      <!-- Nascimento -->
+      <ion-item>
+        <ion-label position="floating" color="primary">Data de Nascimento</ion-label>
+        <ion-datetime [(ngModel)]="user.data_nascimento" name="data_nascimento" formControlName="data_nascimento"
+          displayFormat="MM DD YY"></ion-datetime>
+      </ion-item>
 
-  <!-- Button -->
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="4">
-        <ion-button>Adicionar</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      <!-- Perfil -->
+
+      <!-- Aplicativos -->
+
+      <!-- Cadastrar button -->
+      <div class="ion-padding">
+        <ion-button type="submit" expand="block" class="btn-login ion-margin">Adicionar</ion-button>
+      </div>
+    </form>
+  </ng-container>
 </ion-content>
