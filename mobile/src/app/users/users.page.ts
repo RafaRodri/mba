@@ -2,40 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-// Provider
-import { UsersService } from './users.service'
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
-  users: any[];
 
   constructor(private alertController: AlertController, private router: Router,
-    private toastController: ToastController, private usersService: UsersService) { }
+    private toastController: ToastController) { }
 
-  ngOnInit() {
-    this.users = [];
-    this.getAllUsers();
-  }
+  ngOnInit() {}
 
-  getAllUsers() {
-    //this.usersService.getAll()
-    //  .then((result: any) => { //populando o objeto
-    //    this.users = result.data;
-    //  })
-    //  .catch(async error => {
-    //    console.log('catch');
-    //    const toast = await this.toastController.create({
-    //      message: 'Erro ao listar os usuários. Erro: ' + error.error,
-    //      position: 'bottom',
-    //      duration: 3000
-    //    });
-    //    await toast.present();
-    //  });
-  }
+/////////    // passa objeto para o método que acessa a api
+/////////    this.authService.logar(login)
+/////////      .subscribe((result) => { // callback com os dados
+/////////        // se fosse uma lista
+/////////        // this.pessoas = result;
+
 
   edit(user: any) {
     //this.navCtrl.push('UserPage', {user: user});

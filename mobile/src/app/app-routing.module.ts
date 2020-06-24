@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,32 +9,28 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'users',
-    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
+    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'user',
-    loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule)
+    loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'apps',
-    loadChildren: () => import('./apps/apps.module').then( m => m.AppsPageModule)
-  },
-  {
-    path: 'manager',
-    loadChildren: () => import('./manager/manager.module').then( m => m.ManagerPageModule)
+    loadChildren: () => import('./apps/apps.module').then( m => m.AppsPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

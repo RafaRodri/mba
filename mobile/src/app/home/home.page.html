@@ -14,31 +14,33 @@
 
 <ion-content>
   <!-- Default Item -->
-  <ion-item>
-    <ion-label>
-      <h1>Nome</h1>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      <strong>E-mail:</strong>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      <strong>CPF:</strong> 000.000.000-00
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      <strong>RG:</strong>
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      <strong>Nascimento:</strong>
-    </ion-label>
-  </ion-item>
+  <ng-container *ngIf="user">
+    <ion-item>
+      <ion-label>
+        <h1>{{user.nome}}</h1>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <strong>E-mail:</strong> {{user.email}}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <strong>CPF:</strong> {{user.cpf}}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <strong>RG:</strong> {{user.rg}}
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <strong>Data de Nascimento:</strong> {{user.data_nascimento | date:'dd/MM/yyyy'}}
+      </ion-label>
+    </ion-item>
+  </ng-container>
 
   <!-- Button -->
   <ion-button class="ion-margin end" size="small">
