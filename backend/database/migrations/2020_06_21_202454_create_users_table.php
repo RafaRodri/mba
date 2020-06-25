@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
     public function up()
     {
         /**
-        * Configuração da tabela users
-        */
+         * Configuração da tabela users
+         */
         Schema::create('users', function (Blueprint $table) {
             /**
              * Dados Pessoais
@@ -32,14 +32,14 @@ class CreateUsersTable extends Migration
             /**
              * Auth
              */
-            $table->string('email', 80)->unique()->nullable();          
+            $table->string('email', 80)->unique()->nullable();
             $table->string('password', 254);
 
             /**
              * Redefinição de senha
              */
             $table->rememberToken();
-            
+
             /**
              * Chave Estrangeira
              */

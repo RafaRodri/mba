@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \Exception;
 
 class AuthController extends Controller
 {
@@ -28,12 +29,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-     public function logout()
-     {
-         auth('api')->logout();
- 
-         return response()->json(['message' => 'Successfully logged out']);
-     }
+    public function logout()
+    {
+        auth('api')->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 
     /**
      * Get the token array structure.

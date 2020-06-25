@@ -14,8 +14,8 @@ class CreateAppUserTable extends Migration
     public function up()
     {
         /**
-        * Configuração da tabela app_user
-        */
+         * Configuração da tabela app_user
+         */
         Schema::create('app_user', function (Blueprint $table) {
             $table->increments('id');
 

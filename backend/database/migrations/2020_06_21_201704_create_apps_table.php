@@ -17,12 +17,12 @@ class CreateAppsTable extends Migration
     public function up()
     {
         /**
-        * Configuração da tabela apps
-        */
+         * Configuração da tabela apps
+         */
         Schema::create('apps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome',30);
-            $table->string('bundle_id',30);
+            $table->string('nome', 30);
+            $table->string('bundle_id', 30);
             $table->timestamps();
             $table->softDeletes();
         });

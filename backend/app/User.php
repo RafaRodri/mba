@@ -14,53 +14,36 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    // Campos que podem ser enviados com atribuição em massa
     protected $fillable = [
         'nome', 'email', 'password', 'cpf', 'data_nascimento', 'rg', 'profile_id'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    // Campos que devem ficar ocultos
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
+    // Campos que devem ser convertidos para tipos nativos
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Explicitar uso do soft delete
-     *
-     * @var array
-     */
+
+    // Explicitar uso do soft delete
     protected $dates = [
         'deleted_at'
     ];
 
-    /**
-     * Relacionamento "one-to-many (inverso)"
-     */
-    function profile() {
+    // Relacionamento "one-to-many (inverso)"
+    function profile()
+    {
         return $this->belongsTo('App\Profile', 'profile_id');
     }
 
-    /**
-     * Relacionamento "many-to-many"
-     */
-    function apps() {
+    // Relacionamento "many-to-many"
+    function apps()
+    {
         return $this->belongsToMany('App\App', 'app_user', 'user_id', 'app_id');
     }
 
@@ -69,18 +52,18 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-     public function getJWTIdentifier()
-     {
-         return $this->getKey();
-     }
- 
-     /**
-      * Return a key value array, containing any custom claims to be added to the JWT.
-      *
-      * @return array
-      */
-     public function getJWTCustomClaims()
-     {
-         return [];
-     }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

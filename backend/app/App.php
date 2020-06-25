@@ -16,7 +16,8 @@ class App extends Model
     protected $dates = ['deleted_at'];
 
     //Relacionamento "many-to-many"
-    function users() {
+    function users()
+    {
         return $this->belongsToMany('App\User', 'app_user', 'user_id', 'app_id');
     }
 }
