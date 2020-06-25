@@ -19,12 +19,12 @@
 
 <ion-content>
   <!-- Usuário -->
-  <ng-container *ngIf="user">
+  <ng-container>
     <!-- User form -->
     <form class="form" [formGroup]="formUser" (ngSubmit)="cadastrar()">
       <!-- Nome -->
       <ion-item>
-        <ion-label position="floating" color="primary">Nome</ion-label>
+        <ion-label position="floating" color="primary">Nome *</ion-label>
         <ion-input type="text" name="nome" formControlName="nome" clearInput></ion-input>
       </ion-item>
 
@@ -36,7 +36,7 @@
 
       <!-- CPF -->
       <ion-item>
-        <ion-label position="floating" color="primary">CPF</ion-label>
+        <ion-label position="floating" color="primary">CPF *</ion-label>
         <ion-input type="text" name="cpf" formControlName="cpf" clearInput></ion-input>
       </ion-item>
 
@@ -67,6 +67,12 @@
         <ion-select multiple="true" name="apps" formControlName="apps">
           <ion-select-option *ngFor="let app of apps" [value]="app.id">{{ app.nome }}</ion-select-option>
         </ion-select>
+      </ion-item>
+
+      <!-- Senha -->
+      <ion-item *ngIf="userId === userLogged.id || !userId">
+        <ion-label position="stacked" color="primary">Senha *</ion-label>
+        <ion-input type="password" name="password" formControlName="password" clearInput></ion-input>
       </ion-item>
 
       <!-- Cadastrar button -->

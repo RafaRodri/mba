@@ -23,7 +23,8 @@ export class UserPage implements OnInit {
 
   userId: number;
 
-  user: User
+  userLogged: User
+  userFind: User
   profiles: Profile[] = []
   apps: App[] = []
 
@@ -38,16 +39,22 @@ export class UserPage implements OnInit {
       cpf: new FormControl('', [Validators.required]),
       rg: new FormControl(''),
       data_nascimento: new FormControl(''),
-      profile_id: new FormControl(''),
+      profile_id: new FormControl('', [Validators.required]),
       apps: new FormControl([]),
+      password: new FormControl('')
     });
   }
 
   ngOnInit() {
+    // Recupera usuário logado
+    this.userLogged = this.userService.getUser();
+
     // Recupera id do usuário selecionado
     this.activatedRoute.paramMap.subscribe(params => {
-      this.userId = Number(params.get('id'));
-      this.getUserById(this.userId);
+      if (params.get('id')) {
+        this.userId = Number(params.get('id'));
+        this.getUserById(this.userId);
+      }
     });
 
     // Recupera todos perfis cadastrados
@@ -69,11 +76,24 @@ export class UserPage implements OnInit {
     }
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api
-    let user: User = this.formUser.getRawValue();
-    user.id = this.userId;  // atribui ID da página ao objeto user
-    this.presentLoading();
-    this.userService.updateUser(user).subscribe((result: User) => {
+    let userForm: User = this.formUser.getRawValue();
 
+    userForm.id = this.userId;  // atribui ID da página ao objeto user
+    this.presentLoading();
+
+    // Atualizar
+    if (this.userId) {
+      this.formUpdate(userForm);
+    }
+    // Cadastrar
+    else {
+      this.formPost(userForm);
+    }
+  }
+
+  // Submete o formulário para atualização cadastral
+  async formUpdate(user: User) {
+    this.userService.updateUser(user).subscribe((result: User) => {
       // se o cadastro alterado, for do usuário logado, faz o update do registro armazenado no local storage
       if (this.userService.getUser().cpf == user.cpf) {
         this.userService.setUser(user);
@@ -92,11 +112,30 @@ export class UserPage implements OnInit {
     });
   }
 
+  // Submete o formulário para criar novo cadastro
+  async formPost(user: User) {
+    this.userService.postUser(user).subscribe((result: User) => {
+      // deixa de ser um novo cadastro e direciona para a tela de update
+      this.router.navigate(['user/edit/' + result.id]);
+
+      // mensagem de atualização realizada com sucesso
+      this.presentToast('success', 2000, 'Dados atualizados com sucesso.');
+
+      // fecha animação de loading e apresenta mensagem ao usuário
+      this.loadingController.dismiss();
+      return;
+    }, (error) => { // erro no update do usuário
+      // fecha animação de loading e apresenta mensagem ao usuário
+      this.loadingController.dismiss();
+      this.presentToast('danger', 2000, 'Ocorreu um erro ao cadastrar suas informações. <br>Tente novamente ou crie um nova conta.');
+    });
+  }
+
+  // Acessa api e cria objeto com dados do usuário selecionado
   async getUserById(userId: number) {
-    // cria objeto com dados do usuário selecionado
     this.userService.getUserById(userId).subscribe((result: User) => {
-      this.user = result;
-      this.formUser.reset(this.user);
+      this.userFind = result;
+      this.formUser.reset(this.userFind);
     }, (error) => {
       this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');
       this.router.navigate(['home']);

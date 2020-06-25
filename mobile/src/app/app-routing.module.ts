@@ -10,35 +10,46 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
   },
   {
     path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canLoad: [AuthGuard]
   },
   {
     path: 'users',
-    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule),
+    loadChildren: () => import('./users/users.module').then(m => m.UsersPageModule),
     canLoad: [AuthGuard]
   },
   {
-    path: 'user/:id',
-    loadChildren: () => import('./users/user/user.module').then( m => m.UserPageModule),
+    path: 'user',
+    loadChildren: () => import('./users/user/user.module').then(m => m.UserPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'user/edit/:id',
+    loadChildren: () => import('./users/user/user.module').then(m => m.UserPageModule),
     canLoad: [AuthGuard]
   },
   {
     path: 'apps',
-    loadChildren: () => import('./apps/apps.module').then( m => m.AppsPageModule),
+    loadChildren: () => import('./apps/apps.module').then(m => m.AppsPageModule),
     canLoad: [AuthGuard]
   },
   {
-    path: 'app/:id',
-    loadChildren: () => import('./apps/app/app.module').then( m => m.AppPageModule)
+    path: 'app',
+    loadChildren: () => import('./apps/app/app.module').then(m => m.AppPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'app/edit/:id',
+    loadChildren: () => import('./apps/app/app.module').then(m => m.AppPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 
@@ -48,4 +59,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

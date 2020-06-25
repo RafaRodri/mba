@@ -12,4 +12,5 @@ export interface User {
   profile_id: number;
   profile: Profile;
   apps: App;
+  password: string;
 }

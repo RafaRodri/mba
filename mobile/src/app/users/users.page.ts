@@ -32,7 +32,7 @@ export class UsersPage implements OnInit {
 
   // Clique no botão "editar"
   async editar(id: number) {
-    this.router.navigate(['user/' + id]);
+    this.router.navigate(['user/edit/' + id]);
     return;
   }
 

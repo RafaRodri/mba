@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
 
   // Clique no botão "atualizar cadastro"
   async editar(id: string) {
-    this.router.navigate(['user/' + id]);
+    this.router.navigate(['user/edit/' + id]);
     return;
   }
 

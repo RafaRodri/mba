@@ -90,12 +90,16 @@ class UsersController extends Controller
             }
 
             // Recebe os aplicativos permitidos a este usuário
-            $apps = $request->all()['apps'];
-            // Remove todas as relações e as configura novamente
-            $user->apps()->sync($apps);
+            if(array_key_exists('apps',$request->all())){
+                $apps = $request->all()['apps'];
+                // Remove todas as relações e as configura novamente
+                $user->apps()->sync($apps);
+            }
 
             // Atualiza o usuário
-            $user->fill($request->all());
+            $data = $request->all();
+            $data['password'] = bcrypt($data['password']);
+            $user->fill($data);
             $user->save();
     
             // Resposta com status 200
