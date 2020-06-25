@@ -39,7 +39,6 @@ class UsersController extends Controller
                 // Caso não encontre registro, retorna status 404
                 if(!$user) {                    
                     return response()->json([
-                        'tot_users' => 0, 
                         'message' => 'Record not found',
                     ], 404);
                 }
@@ -89,7 +88,12 @@ class UsersController extends Controller
                     'message' => 'Record not found',
                 ], 404);
             }
-    
+
+            // Recebe os aplicativos permitidos a este usuário
+            $apps = $request->all()['apps'];
+            // Remove todas as relações e as configura novamente
+            $user->apps()->sync($apps);
+
             // Atualiza o usuário
             $user->fill($request->all());
             $user->save();

@@ -25,11 +25,18 @@ export class HomePage implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
-    // ativa sidemenu (inativo na tela de login)
+    // Ativa sidemenu (inativo na tela de login)
     this.menuController.enable(true);
 
-    // cria objeto com dados do usuário logado
+    // Cria objeto com dados do usuário logado
     this.user = this.userService.getUser();
+    
+    // Busca na API, todos os dados do usuário logado
+    this.userService.getUserByCpf(this.user.cpf).subscribe((result) => {
+      this.user = result;
+    }, (error) => {
+      this.presentToast('danger', 2000, 'Nenhum registro encontrado.');
+    });
   }
 
   // Clique no botão "atualizar cadastro"

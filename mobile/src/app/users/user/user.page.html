@@ -48,13 +48,26 @@
 
       <!-- Nascimento -->
       <ion-item>
-        <ion-label position="floating" color="primary">Data de Nascimento</ion-label>
+        <ion-label position="stacked" color="primary">Data de Nascimento</ion-label>
         <ion-input type="date" name="data_nascimento" formControlName="data_nascimento"></ion-input>
       </ion-item>
 
       <!-- Perfil -->
+      <ion-item>
+        <ion-label position="stacked" color="primary">Perfil</ion-label>
+        <ion-select [compareWith]="compareWith" value="MyDefaultAppIdValue" name="profile_id" formControlName="profile_id" interface="action-sheet">
+          <ion-select-option *ngFor="let profile of profiles" [value]="profile.id">{{ profile.titulo }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
       <!-- Aplicativos -->
+      <ion-item *ngIf="apps.length > 0">
+        <ion-label position="stacked" color="primary">Aplicativos</ion-label>
+        <ion-select multiple="true" name="apps" formControlName="apps">
+          <ion-select-option *ngFor="let app of apps" [value]="app.id">{{ app.nome }}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
       <!-- Cadastrar button -->
       <div class="ion-padding">

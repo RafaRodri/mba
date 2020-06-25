@@ -17,6 +17,6 @@ class App extends Model
 
     //Relacionamento "many-to-many"
     function users() {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User', 'app_user', 'user_id', 'app_id');
     }
 }

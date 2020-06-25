@@ -12,7 +12,6 @@ export class AppService {
 
   constructor(private httpClient: HttpClient) { }
 
-  
   // Busca Todos os Apps
   getApps() {
     return this.httpClient.get<App[]>(environment.apiUrl + '/apps');

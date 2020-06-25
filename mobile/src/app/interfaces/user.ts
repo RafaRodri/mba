@@ -9,6 +9,7 @@ export interface User {
   cpf: string;
   rg: string;
   data_nascimento: Date;
+  profile_id: number;
   profile: Profile;
   apps: App;
 }

@@ -4,11 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 
 // Services
-import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { AppService } from 'src/app/services/app.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 // Interfaces
 import { User } from 'src/app/interfaces/user';
+import { App } from 'src/app/interfaces/app';
+import { Profile } from 'src/app/interfaces/profile';
 
 @Component({
   selector: 'app-user',
@@ -18,10 +22,15 @@ import { User } from 'src/app/interfaces/user';
 export class UserPage implements OnInit {
 
   userId: number;
+
   user: User
+  profiles: Profile[] = []
+  apps: App[] = []
+
   formUser: FormGroup;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(private userService: UserService, private appService: AppService, private profileService: ProfileService,
+    private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
     private toastController: ToastController, private loadingController: LoadingController) {
     this.formUser = new FormGroup({
       nome: new FormControl('', [Validators.required]),
@@ -29,8 +38,8 @@ export class UserPage implements OnInit {
       cpf: new FormControl('', [Validators.required]),
       rg: new FormControl(''),
       data_nascimento: new FormControl(''),
-      perfil: new FormControl(''),
-      apps: new FormControl(''),
+      profile_id: new FormControl(''),
+      apps: new FormControl([]),
     });
   }
 
@@ -39,6 +48,16 @@ export class UserPage implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.userId = Number(params.get('id'));
       this.getUserById(this.userId);
+    });
+
+    // Recupera todos perfis cadastrados
+    this.profileService.getProfiles().subscribe((result) => {
+      this.profiles = result;
+    });
+
+    // Recupera todos aplicativos cadastrados
+    this.appService.getApps().subscribe((result) => {
+      this.apps = result;
     });
   }
 
@@ -52,7 +71,6 @@ export class UserPage implements OnInit {
     // armazena dados informados em um objeto e os passa para o método que acessa a api
     let user: User = this.formUser.getRawValue();
     user.id = this.userId;  // atribui ID da página ao objeto user
-
     this.presentLoading();
     this.userService.updateUser(user).subscribe((result: User) => {
 
