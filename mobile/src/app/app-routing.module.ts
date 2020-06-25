@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'apps',
     loadChildren: () => import('./apps/apps.module').then( m => m.AppsPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'app/:id',
+    loadChildren: () => import('./apps/app/app.module').then( m => m.AppPageModule)
   }
 ];
 

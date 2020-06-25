@@ -17,7 +17,7 @@ export class UserService {
 
   // Busca Todos os Usuários
   getUsers() {
-    return this.httpClient.get<User>(environment.apiUrl + '/users');
+    return this.httpClient.get<User[]>(environment.apiUrl + '/users');
   }
 
   // Busca Usuário por ID

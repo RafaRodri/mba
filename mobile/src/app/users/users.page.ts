@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+// Service
+import { UserService } from '../services/user.service';
 
 // Interfaces
 import { User } from '../interfaces/user';
@@ -12,34 +15,143 @@ import { User } from '../interfaces/user';
 })
 export class UsersPage implements OnInit {
 
-  pessoas: User[] = [];
+  users: User[] = [];
 
   constructor(private alertController: AlertController, private router: Router,
-    private toastController: ToastController) { }
+    private toastController: ToastController, private userService: UserService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-/////////    // passa objeto para o método que acessa a api
-/////////    this.authService.logar(login)
-/////////      .subscribe((result) => { // callback com os dados
-/////////        // se fosse uma lista
-/////////        // this.pessoas = result;
-
-
-  edit(user: User) {
-    this.router.navigate(['/user'])
+  ionViewDidEnter() {
+    this.userService.getUsers().subscribe((result) => {
+      this.users = result
+    }, (error) => {
+      this.presentToast('danger', 2000, 'Nenhum registro encontrado.');
+    });
   }
 
-  async presentAlert(user: User) {
+  // Clique no botão "editar"
+  async editar(id: number) {
+    this.router.navigate(['user/' + id]);
+    return;
+  }
+
+  // Clique no botão "apagar"
+  async confirmarExclusao(id: number) {
     const alert = await this.alertController.create({
-      //cssClass: 'my-custom-class',
       header: 'Espera!',
-      subHeader: 'Realmente quer apagar esse registro?',
+      subHeader: 'Realmente quer excluir esse registro?',
       message: 'Esta ação não poderá ser desfeita.',
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'Cancelar'
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.userService.deleteUser(id).subscribe((result) => {
+              this.presentToast('success', 2000, 'Usuário removido com sucesso.');
+            }, (error) => {
+              this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');
+            });
+          }
+        }
+      ]
     });
 
     await alert.present();
+  }
+
+  // Adiciona usuário
+  async newUser() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Prompt!',
+      inputs: [
+        {
+          name: 'name1',
+          type: 'text',
+          placeholder: 'Placeholder 1'
+        },
+        {
+          name: 'name2',
+          type: 'text',
+          id: 'name2-id',
+          value: 'hello',
+          placeholder: 'Placeholder 2'
+        },
+        // multiline input.
+        {
+          name: 'paragraph',
+          id: 'paragraph',
+          type: 'textarea',
+          placeholder: 'Placeholder 3'
+        },
+        {
+          name: 'name3',
+          value: 'http://ionicframework.com',
+          type: 'url',
+          placeholder: 'Favorite site ever'
+        },
+        // input date with min & max
+        {
+          name: 'name4',
+          type: 'date',
+          min: '2017-03-01',
+          max: '2018-01-12'
+        },
+        // input date without min nor max
+        {
+          name: 'name5',
+          type: 'date'
+        },
+        {
+          name: 'name6',
+          type: 'number',
+          min: -5,
+          max: 10
+        },
+        {
+          name: 'name7',
+          type: 'number'
+        },
+        {
+          name: 'name8',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            maxlength: 4,
+            inputmode: 'decimal'
+          }
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentToast(color: string, duration: number, message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      color: color
+    });
+    toast.present();
   }
 
 }

@@ -9,6 +9,11 @@
     <ion-title color="mba">
       <h1>MBA</h1>
     </ion-title>
+
+    <!-- Menu icon -->
+    <ion-buttons slot="end" (click)="logout()">
+      <ion-icon name="log-out-outline" color="danger" slot="start"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,106 +21,31 @@
 
   <!-- Listagem -->
   <ion-list class="ion-margin">
-    <ion-item-sliding>
+    <ion-title *ngIf="restaurants?.length === 0">
+      <h1>Nenhum usuário encontrado</h1>
+    </ion-title>
+    <ion-item-sliding *ngFor="let user of users">
       <!-- Item -->
-      <ion-item (click)="detail(item)">
+      <ion-item (click)="editar(user.id)">
         <ion-avatar slot="start">
           <img src="../assets/image/avatar.svg">
         </ion-avatar>
         <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
-          <h2>[ Nome] </h2>
-          <p>[ Perfil ]</p>
-          <p>[ E-mail ]</p>
+          <h2>{{user.nome}}</h2>
+          <h3>{{user.profile.titulo}}</h3>
+          <p>{{user.email}}</p>
         </ion-label>
       </ion-item>
 
-      <!-- Sliding Editar  -->
-      <ion-item-options side="start">
-        <ion-item-option (click)="edit(1)">Editar</ion-item-option>
-      </ion-item-options>
-
       <!-- Sliding Apagar  -->
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="presentAlert(item)">Apagar</ion-item-option>
+        <ion-item-option color="danger" (click)="confirmarExclusao(user.id)">Apagar</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
-
-    <ion-item-sliding>
-      <!-- Item -->
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../assets/image/avatar.svg">
-        </ion-avatar>
-        <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
-          <h2>[ Nome] </h2>
-          <p>[ Perfil ]</p>
-          <p>[ E-mail ]</p>
-        </ion-label>
-      </ion-item>
-
-      <!-- Sliding Editar  -->
-      <ion-item-options side="start">
-        <ion-item-option (click)="edit(item)">Editar</ion-item-option>
-      </ion-item-options>
-
-      <!-- Sliding Apagar  -->
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="presentAlert(item)">Apagar</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <!-- Item -->
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../assets/image/avatar.svg">
-        </ion-avatar>
-        <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
-          <h2>[ Nome] </h2>
-          <p>[ Perfil ]</p>
-          <p>[ E-mail ]</p>
-        </ion-label>
-      </ion-item>
-
-      <!-- Sliding Editar  -->
-      <ion-item-options side="start">
-        <ion-item-option (click)="edit(item)">Editar</ion-item-option>
-      </ion-item-options>
-
-      <!-- Sliding Apagar  -->
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="presentAlert(item)">Apagar</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <!-- Item -->
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../assets/image/avatar.svg">
-        </ion-avatar>
-        <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">
-          <h2>[ Nome] </h2>
-          <p>[ Perfil ]</p>
-          <p>[ E-mail ]</p>
-        </ion-label>
-      </ion-item>
-
-      <!-- Sliding Editar  -->
-      <ion-item-options side="start">
-        <ion-item-option (click)="edit(item)">Editar</ion-item-option>
-      </ion-item-options>
-
-      <!-- Sliding Apagar  -->
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="presentAlert(item)">Apagar</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
   </ion-list>
 
   <!-- Fab no canto inferior direito -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="newUser()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

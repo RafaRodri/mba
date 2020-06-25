@@ -1,5 +1,5 @@
 import { Profile } from './profile';
-import { Apps } from './apps';
+import { App } from './app';
 
 // Interface de usuário
 export interface User {
@@ -10,5 +10,5 @@ export interface User {
   rg: string;
   data_nascimento: Date;
   profile: Profile;
-  apps: Apps;
+  apps: App;
 }

@@ -1,5 +1,5 @@
 // Interface de Aplicativos
-export interface Apps {
+export interface App {
   id: number;
   nome: string;
   bundle_id: string;

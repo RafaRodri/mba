@@ -4,81 +4,71 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 
 // Services
-import { UserService } from 'src/app/services/user.service';
+import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 // Interfaces
-import { User } from 'src/app/interfaces/user';
+import { App } from 'src/app/interfaces/app';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.page.html',
-  styleUrls: ['./user.page.scss'],
+  selector: 'app-app',
+  templateUrl: './app.page.html',
+  styleUrls: ['./app.page.scss'],
 })
-export class UserPage implements OnInit {
+export class AppPage implements OnInit {
 
-  userId: number;
-  user: User
-  formUser: FormGroup;
+  appId: number;
+  app: App
+  formApp: FormGroup;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(private appService: AppService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
     private toastController: ToastController, private loadingController: LoadingController) {
-    this.formUser = new FormGroup({
+    this.formApp = new FormGroup({
       nome: new FormControl('', [Validators.required]),
-      email: new FormControl(''),
-      cpf: new FormControl('', [Validators.required]),
-      rg: new FormControl(''),
-      data_nascimento: new FormControl(''),
-      perfil: new FormControl(''),
-      apps: new FormControl(''),
+      bundle_id: new FormControl('', [Validators.required])
     });
   }
 
   ngOnInit() {
-    // Recupera id do usuário selecionado
+    // Recupera id do app selecionado
     this.activatedRoute.paramMap.subscribe(params => {
-      this.userId = Number(params.get('id'));
-      this.getUserById(this.userId);
+      this.appId = Number(params.get('id'));
+      this.getAppById(this.appId);
     });
   }
 
   async cadastrar() {
     // verifica se o formulário atendeu as validações
-    if (this.formUser.invalid) {
+    if (this.formApp.invalid) {
       this.presentToast('danger', 2000, 'Dados incorretos.');
       return; //encerra tentativa de login
     }
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api
-    let user: User = this.formUser.getRawValue();
-    user.id = this.userId;  // atribui ID da página ao objeto user
+    let app: App = this.formApp.getRawValue();
+    app.id = this.appId;  // atribui ID da página ao objeto app
 
     this.presentLoading();
-    this.userService.updateUser(user).subscribe((result: User) => {
-
-      // se o cadastro alterado, for do usuário logado, faz o update do registro armazenado no local storage
-      if (this.userService.getUser().cpf == user.cpf) {
-        this.userService.setUser(user);
-      }
+    this.appService.updateApp(app).subscribe((result: App) => {
 
       // mensagem de atualização realizada com sucesso
       this.presentToast('success', 2000, 'Dados atualizados com sucesso.');
 
-      // fecha animação de loading e apresenta mensagem ao usuário
+      // fecha animação de loading e apresenta mensagem ao app
       this.loadingController.dismiss();
       return;
-    }, (error) => { // erro no update do usuário
-      // fecha animação de loading e apresenta mensagem ao usuário
+    }, (error) => { // erro no update do app
+      // fecha animação de loading e apresenta mensagem ao app
       this.loadingController.dismiss();
       this.presentToast('danger', 2000, 'Ocorreu um erro ao cadastrar suas informações. <br>Tente novamente ou crie um nova conta.');
     });
   }
 
-  async getUserById(userId: number) {
-    // cria objeto com dados do usuário selecionado
-    this.userService.getUserById(userId).subscribe((result: User) => {
-      this.user = result;
-      this.formUser.reset(this.user);
+  async getAppById(appId: number) {
+    // cria objeto com dados do app selecionado
+    this.appService.getAppById(appId).subscribe((result: App) => {
+      this.app = result;
+      this.formApp.reset(this.app);
     }, (error) => {
       this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');
       this.router.navigate(['home']);

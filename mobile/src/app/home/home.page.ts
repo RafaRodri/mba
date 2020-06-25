@@ -38,33 +38,30 @@ export class HomePage implements OnInit {
     return;
   }
 
-  // Clique no botão "excluir conta"
-  async apagar(id: string) {
-    this.confirmarExclusao();
-    return;
-  }
-
+  // Realiza logout
   async logout() {
     this.authService.clearToken();
     this.router.navigate(['login']);
     return;
   }
 
-  async confirmarExclusao() {
+  // Clique no botão "excluir conta"
+  async confirmarExclusao(id: number) {
     const alert = await this.alertController.create({
-      header: 'Espere um pouco!',
-      message: 'Você deseja realmente <strong>excluir</strong> esse registro?',
+      header: 'Espera!',
+      subHeader: 'Realmente quer excluir esse registro?',
+      message: 'Esta ação não poderá ser desfeita.',
       buttons: [
         {
           text: 'Cancelar'
         }, {
           text: 'Confirmar',
           handler: () => {
-            this.userService.deleteUser(this.user.id).subscribe((result) => {
-
+            this.userService.deleteUser(id).subscribe((result) => {
               // se o cadastro alterado, for do usuário logado, faz o logout
               if (this.userService.getUser().cpf == this.user.cpf) {
                 this.logout();
+                this.presentToast('success', 2000, 'Sua conta foi removida com sucesso.');
               }
 
             }, (error) => {
