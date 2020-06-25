@@ -32,8 +32,10 @@ export class AppPage implements OnInit {
   ngOnInit() {
     // Recupera id do app selecionado
     this.activatedRoute.paramMap.subscribe(params => {
-      this.appId = Number(params.get('id'));
-      this.getAppById(this.appId);
+      if (params.get('id')) {
+        this.appId = Number(params.get('id'));
+        this.getAppById(this.appId);
+      }
     });
   }
 
@@ -45,10 +47,22 @@ export class AppPage implements OnInit {
     }
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api
-    let app: App = this.formApp.getRawValue();
-    app.id = this.appId;  // atribui ID da página ao objeto app
-
+    let appForm: App = this.formApp.getRawValue();
+    appForm.id = this.appId;  // atribui ID da página ao objeto app
     this.presentLoading();
+
+    // Atualizar
+    if (this.appId) {
+      this.formUpdate(appForm);
+    }
+    // Cadastrar
+    else {
+      this.formPost(appForm);
+    }
+  }
+
+  // Submete o formulário para atualização do registro
+  async formUpdate(app: App) {
     this.appService.updateApp(app).subscribe((result: App) => {
 
       // mensagem de atualização realizada com sucesso
@@ -64,13 +78,32 @@ export class AppPage implements OnInit {
     });
   }
 
+  // Submete o formulário para criar novo aplicativo
+  async formPost(app: App) {
+    this.appService.postApp(app).subscribe((result: App) => {
+      // deixa de ser um novo cadastro e direciona para a tela de update
+      this.router.navigate(['app/edit/' + result.id]);
+
+      // mensagem de atualização realizada com sucesso
+      this.presentToast('success', 2000, 'Dados atualizados com sucesso.');
+
+      // fecha animação de loading e apresenta mensagem ao usuário
+      this.loadingController.dismiss();
+      return;
+    }, (error) => { // erro no update
+      // fecha animação de loading e apresenta mensagem ao usuário
+      this.loadingController.dismiss();
+      this.presentToast('danger', 2000, 'Ocorreu um erro ao cadastrar suas informações. <br>Tente novamente ou crie um nova conta.');
+    });
+  }
+
   async getAppById(appId: number) {
     // cria objeto com dados do app selecionado
     this.appService.getAppById(appId).subscribe((result: App) => {
       this.app = result;
       this.formApp.reset(this.app);
     }, (error) => {
-      this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');
+      this.presentToast('danger', 2000, 'Registro não foi encontrado.');
       this.router.navigate(['home']);
       return;
     });

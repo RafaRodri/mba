@@ -21,7 +21,7 @@ class AppsController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -45,7 +45,7 @@ class AppsController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -64,7 +64,7 @@ class AppsController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -92,7 +92,7 @@ class AppsController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -119,7 +119,7 @@ class AppsController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }

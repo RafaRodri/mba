@@ -7,6 +7,7 @@ import { User } from '../interfaces/user';
 
 // Chaves para armazenamento no local storage
 export const USER = '_mbaRafael_user';
+export const PROFILE = '_mbaRafael_perfil';
 
 @Injectable({
   providedIn: 'root'
@@ -48,11 +49,17 @@ export class UserService {
   // Armazena dados do usuário em local storage
   setUser(user: User) {
     localStorage.setItem(USER, JSON.stringify(user));
+    localStorage.setItem(PROFILE, JSON.stringify(user.profile_id));
   }
 
   // Retorna dados do usuário armazenado em local storage
   getUser() {
     return JSON.parse(localStorage.getItem(USER));
+  }
+
+  // Retorna perfil do usuário armazenado em local storage
+  getProfile() {
+    return JSON.parse(localStorage.getItem(PROFILE));
   }
 
   // Apaga dados do usuário do local storage

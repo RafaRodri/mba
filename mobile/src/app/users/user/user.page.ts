@@ -24,6 +24,8 @@ export class UserPage implements OnInit {
   userId: number;
 
   userLogged: User
+  profileLogged: number;
+
   userFind: User
   profiles: Profile[] = []
   apps: App[] = []
@@ -48,6 +50,9 @@ export class UserPage implements OnInit {
   ngOnInit() {
     // Recupera usuário logado
     this.userLogged = this.userService.getUser();
+
+    // Recupera nível de acesso do usuário logado
+    this.profileLogged = this.userService.getProfile()
 
     // Recupera id do usuário selecionado
     this.activatedRoute.paramMap.subscribe(params => {
@@ -77,7 +82,6 @@ export class UserPage implements OnInit {
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api
     let userForm: User = this.formUser.getRawValue();
-
     userForm.id = this.userId;  // atribui ID da página ao objeto user
     this.presentLoading();
 
@@ -91,9 +95,12 @@ export class UserPage implements OnInit {
     }
   }
 
-  // Submete o formulário para atualização cadastral
+  // Submete o formulário para atualização do registro
   async formUpdate(user: User) {
     this.userService.updateUser(user).subscribe((result: User) => {
+      // faz o update do perfil do usuário logado no local storage
+      this.userService.setUser(user);
+
       // se o cadastro alterado, for do usuário logado, faz o update do registro armazenado no local storage
       if (this.userService.getUser().cpf == user.cpf) {
         this.userService.setUser(user);
@@ -105,7 +112,7 @@ export class UserPage implements OnInit {
       // fecha animação de loading e apresenta mensagem ao usuário
       this.loadingController.dismiss();
       return;
-    }, (error) => { // erro no update do usuário
+    }, (error) => { // erro no update
       // fecha animação de loading e apresenta mensagem ao usuário
       this.loadingController.dismiss();
       this.presentToast('danger', 2000, 'Ocorreu um erro ao cadastrar suas informações. <br>Tente novamente ou crie um nova conta.');
@@ -137,7 +144,7 @@ export class UserPage implements OnInit {
       this.userFind = result;
       this.formUser.reset(this.userFind);
     }, (error) => {
-      this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');
+      this.presentToast('danger', 2000, 'Registro não foi encontrado.');
       this.router.navigate(['home']);
       return;
     });

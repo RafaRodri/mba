@@ -18,12 +18,11 @@
 </ion-header>
 
 <ion-content>
-
   <!-- Listagem -->
   <ion-list class="ion-margin">
-    <ion-title *ngIf="restaurants?.length === 0">
+    <ion-text *ngIf="apps.length == 0">
       <h1>Nenhum usuário encontrado</h1>
-    </ion-title>
+    </ion-text>
     <ion-item-sliding *ngFor="let app of apps; let i = index">
       <!-- Item -->
       <ion-item (click)="editar(app.id)">
@@ -49,5 +48,4 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

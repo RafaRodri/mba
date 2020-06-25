@@ -54,10 +54,19 @@
 
       <!-- Perfil -->
       <ion-item>
-        <ion-label position="stacked" color="primary">Perfil</ion-label>
-        <ion-select [compareWith]="compareWith" value="MyDefaultAppIdValue" name="profile_id" formControlName="profile_id" interface="action-sheet">
-          <ion-select-option *ngFor="let profile of profiles" [value]="profile.id">{{ profile.titulo }}
-          </ion-select-option>
+        <ion-label position="stacked" color="primary">Perfil *</ion-label>
+        <ion-select [compareWith]="compareWith" value="MyDefaultAppIdValue" name="profile_id"
+          formControlName="profile_id" interface="action-sheet">
+
+
+          <!--<ion-item-sliding *ngIf="user.profile_id < profileLogged || user.id == userLogged.id">-->
+          <ng-container *ngFor="let profile of profiles">
+
+
+            <ion-select-option *ngIf="profile.id < profileLogged || profile.id == profileLogged" [value]="profile.id">
+              {{ profile.titulo }}
+            </ion-select-option>
+          </ng-container>
         </ion-select>
       </ion-item>
 
@@ -71,7 +80,7 @@
 
       <!-- Senha -->
       <ion-item *ngIf="userId === userLogged.id || !userId">
-        <ion-label position="stacked" color="primary">Senha *</ion-label>
+        <ion-label position="stacked" color="primary">Alterar Senha *</ion-label>
         <ion-input type="password" name="password" formControlName="password" clearInput></ion-input>
       </ion-item>
 

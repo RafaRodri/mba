@@ -21,7 +21,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -50,7 +50,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -71,7 +71,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -82,6 +82,7 @@ class UsersController extends Controller
         try {
             // Busca usuário por ID
             $user = User::find($id);
+            $data = $request->all();
 
             // Caso não encontre registro, retorna status 404
             if (!$user) {
@@ -97,9 +98,12 @@ class UsersController extends Controller
                 $user->apps()->sync($apps);
             }
 
+            // Criptografa senha, caso esteja alterando-a
+            if (array_key_exists('password', $request->all())) {
+                $data['password'] = bcrypt($data['password']);
+            }
+
             // Atualiza o usuário
-            $data = $request->all();
-            $data['password'] = bcrypt($data['password']);
             $user->fill($data);
             $user->save();
 
@@ -108,7 +112,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -135,7 +139,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
-                'message' => $e->getPrevious()->getMessage()
+                'message' => $e->getMessage()
             ], 400);
         }
     }

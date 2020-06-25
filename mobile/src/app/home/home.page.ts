@@ -35,7 +35,8 @@ export class HomePage implements OnInit {
     this.userService.getUserByCpf(this.user.cpf).subscribe((result) => {
       this.user = result;
     }, (error) => {
-      this.presentToast('danger', 2000, 'Nenhum registro encontrado.');
+      this.authService.clearToken();
+      this.router.navigate(['/login']);
     });
   }
 
