@@ -4,15 +4,27 @@ Neste projeto, foi construída uma API para persistir operações no banco de da
 
 ## Iniciando o servidor da API
 <ul>
-    <li>Em seu SGBD, crie um novo database para esta aplicação.</li>
-    <li>Acesse o arquivo `/backend.env` e insira as informações de acesso ao seu banco de dados e o nome do database criado no passo anterior.</li>
-    <li>Em seu terminal:</li>
-      <ul>
+  <li>Crie um banco de dados MySQL com as seguintes configurações:</li>
+</ul>
+
+    Database: mba
+    Username: root
+    Password: mysql
+  
+<ul>  
+    <ul>
+      <li>Ou acesse o arquivo `/backend.env` e insira suas próprias credenciais de acesso.</li>
+    </ul>
+</ul>
+
+<ul>
+  <li>Em seu terminal:</li>
+    <ul>
       <li>Acesse a pasta `mba/backend`.</li>
       <li>Execute: `composer.install`</li>    
       <li>Execute: `php artisan migrate:refresh --seed`</li>
       <li>Execute: `php artisan serve`</li>
-      </ul>
+    </ul>
 </ul>
 
 ### Acessando a API
