@@ -16,8 +16,8 @@ class UserSeed extends Seeder
     {
         App\User::create([
             'nome' => 'João da Silva',
-            'cpf' => '43407226004',
-            'rg' => '454653542',
+            'cpf' => '12345678912',
+            'rg' => '4546532',
             'data_nascimento' => '1990-01-01',
             'email' => 'admin@mba.com',
             'password' => bcrypt("123"),

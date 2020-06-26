@@ -47,3 +47,13 @@ Método | Endpoint | Ação | Exemplo |
       <li>Execute: `ionic serve`</li>
       </ul>
 </ul>
+
+### Acessando a aplicação
+
+<ul>
+    <li>Para acessar a aplicação como administrador, poderá utilizar o usuário teste:</li>
+      <ul>
+      <li>CPF: 12345678912</li>
+      <li>Senha: 123</li>    
+      </ul>
+</ul>

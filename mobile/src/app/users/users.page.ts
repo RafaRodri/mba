@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 
 // Interfaces
 import { User } from '../interfaces/user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +21,7 @@ export class UsersPage implements OnInit {
   users: User[] = [];
 
   constructor(private alertController: AlertController, private router: Router,
-    private toastController: ToastController, private userService: UserService) { }
+    private toastController: ToastController, private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
     // Recupera usuário logado
@@ -28,7 +29,7 @@ export class UsersPage implements OnInit {
 
     // Recupera nível de acesso do usuário logado
     this.profileLogged = this.userService.getProfile()
-}
+  }
 
   ionViewDidEnter() {
     this.userService.getUsers().subscribe((result) => {
@@ -39,13 +40,13 @@ export class UsersPage implements OnInit {
   }
 
   // Clique no botão "editar"
-  async editar(id: number) {
+  async edit(id: number) {
     this.router.navigate(['user/edit/' + id]);
     return;
   }
 
   // Clique no botão "apagar"
-  async confirmarExclusao(id: number) {
+  async deleteConfirm(id: number) {
     const alert = await this.alertController.create({
       header: 'Espera!',
       subHeader: 'Realmente quer excluir esse registro?',
@@ -72,6 +73,13 @@ export class UsersPage implements OnInit {
   // Adiciona usuário
   async newUser() {
     this.router.navigate(['user']);
+    return;
+  }
+
+  // Realiza logout
+  async logout() {
+    this.authService.clearToken();
+    this.router.navigate(['login']);
     return;
   }
 

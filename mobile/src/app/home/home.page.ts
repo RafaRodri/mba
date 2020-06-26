@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
   }
 
   // Clique no botão "atualizar cadastro"
-  async editar(id: string) {
+  async edit(id: string) {
     this.router.navigate(['user/edit/' + id]);
     return;
   }
@@ -54,7 +54,7 @@ export class HomePage implements OnInit {
   }
 
   // Clique no botão "excluir conta"
-  async confirmarExclusao(id: number) {
+  async deleteConfirm(id: number) {
     const alert = await this.alertController.create({
       header: 'Espera!',
       subHeader: 'Realmente quer excluir esse registro?',

@@ -4,6 +4,7 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <!-- Menu exibido conforme o nível de acesso -->
             <ion-item *ngIf="p.permissionRequired < profileLogged || p.permissionRequired == profileLogged"
               (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
               [class.selected]="selectedIndex == i">

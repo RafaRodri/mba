@@ -39,11 +39,11 @@ export class AppPage implements OnInit {
     });
   }
 
-  async cadastrar() {
+  async register() {
     // verifica se o formulário atendeu as validações
     if (this.formApp.invalid) {
       this.presentToast('danger', 2000, 'Dados incorretos.');
-      return; //encerra tentativa de login
+      return; //encerra envio de informações
     }
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api
@@ -109,6 +109,7 @@ export class AppPage implements OnInit {
     });
   }
 
+  // Realiza logout
   async logout() {
     this.authService.clearToken();
     this.router.navigate(['login']);

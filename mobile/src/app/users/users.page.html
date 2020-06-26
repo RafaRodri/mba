@@ -21,13 +21,10 @@
 
   <!-- Listagem -->
   <ion-list class="ion-margin">
-    <ion-text *ngIf="users.length == 0">
-      <h1>Nenhum usuário encontrado</h1>
-    </ion-text>
     <ng-container *ngFor="let user of users">
       <ion-item-sliding *ngIf="user.profile_id < profileLogged || user.id == userLogged.id">
         <!-- Item -->
-        <ion-item (click)="editar(user.id)">
+        <ion-item (click)="edit(user.id)">
           <ion-avatar slot="start">
             <img src="../assets/image/avatar.svg">
           </ion-avatar>
@@ -40,10 +37,14 @@
 
         <!-- Sliding Apagar  -->
         <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="confirmarExclusao(user.id)">Apagar</ion-item-option>
+          <ion-item-option color="danger" (click)="deleteConfirm(user.id)">Apagar</ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ng-container>
+    <!-- Nenhum usuário encontrado -->
+    <ion-text *ngIf="users.length == 0">
+      <h1>Nenhum usuário encontrado</h1>
+    </ion-text>
   </ion-list>
 
   <!-- Fab no canto inferior direito -->

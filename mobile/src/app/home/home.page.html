@@ -64,13 +64,13 @@
     <ion-row>
       <!-- Atualizar Cadastro -->
       <ion-col>
-        <ion-button size="block" color="secondary" (click)="editar(user.id)">
+        <ion-button size="block" color="secondary" (click)="edit(user.id)">
           <ion-icon name="arrow-redo-outline" slot="start"></ion-icon> Atualizar Cadastro
         </ion-button>
       </ion-col>
       <!-- Excluir conta -->
       <ion-col>
-        <ion-button size="block" color="danger" (click)="confirmarExclusao(user.id)">
+        <ion-button size="block" color="danger" (click)="deleteConfirm(user.id)">
           <ion-icon name="trash-outline" slot="start"></ion-icon> Excluir Conta
         </ion-button>
       </ion-col>

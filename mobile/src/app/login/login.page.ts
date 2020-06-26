@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
     // verifica se o formulário atendeu as validações
     if (this.formLogin.invalid) {
       this.presentToast('Dados incorretos.');
-      return; //encerra tentativa de login
+      return; //encerra envio de informações
     }
 
     // armazena dados informados em um objeto e os passa para o método que acessa a api

@@ -21,7 +21,7 @@
   <!-- Usuário -->
   <ng-container>
     <!-- User form -->
-    <form class="form" [formGroup]="formUser" (ngSubmit)="cadastrar()">
+    <form class="form" [formGroup]="formUser" (ngSubmit)="register()">
       <!-- Nome -->
       <ion-item>
         <ion-label position="floating" color="primary">Nome *</ion-label>
@@ -75,7 +75,8 @@
 
       <!-- Senha -->
       <ion-item *ngIf="userId === userLogged.id || !userId">
-        <ion-label position="stacked" color="primary">Alterar Senha *</ion-label>
+        <ion-label position="stacked" color="primary" *ngIf="!userId">Criar Senha *</ion-label>
+        <ion-label position="stacked" color="primary" *ngIf="!!userId">Alterar Senha *</ion-label>
         <ion-input type="password" name="password" formControlName="password" clearInput></ion-input>
       </ion-item>
 

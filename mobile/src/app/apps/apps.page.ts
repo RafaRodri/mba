@@ -7,6 +7,7 @@ import { AppService } from '../services/app.service';
 
 // Interfaces
 import { App } from '../interfaces/App';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-apps',
@@ -18,7 +19,7 @@ export class AppsPage implements OnInit {
   apps: App[] = [];
 
   constructor(private alertController: AlertController, private router: Router,
-    private toastController: ToastController, private appService: AppService) { }
+    private toastController: ToastController, private appService: AppService, private authService: AuthService) { }
 
 
   ngOnInit() { }
@@ -33,13 +34,13 @@ export class AppsPage implements OnInit {
 
 
   // Clique no botão "editar"
-  async editar(id: number) {
+  async edit(id: number) {
     this.router.navigate(['app/edit/' + id]);
     return;
   }
 
   // Clique no botão "apagar"
-  async confirmarExclusao(id: number) {
+  async deleteConfirm(id: number) {
     const alert = await this.alertController.create({
       header: 'Espera!',
       subHeader: 'Realmente quer excluir esse registro?',
@@ -66,6 +67,13 @@ export class AppsPage implements OnInit {
   // Adiciona aplicativo
   async newApp() {
     this.router.navigate(['app']);
+    return;
+  }
+
+  // Realiza logout
+  async logout() {
+    this.authService.clearToken();
+    this.router.navigate(['login']);
     return;
   }
 

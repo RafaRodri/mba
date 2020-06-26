@@ -98,8 +98,8 @@ class UsersController extends Controller
                 $user->apps()->sync($apps);
             }
 
-            // Criptografa senha, caso esteja alterando-a
-            if (array_key_exists('password', $request->all())) {
+            // Criptografa senha, caso esteja sendo enviada e diferente de null
+            if (array_key_exists('password', $data)) {
                 $data['password'] = bcrypt($data['password']);
             }
 

@@ -73,17 +73,22 @@ export class UserPage implements OnInit {
     });
   }
 
-  async cadastrar() {
+  async register() {
     // verifica se o formulário atendeu as validações
     if (this.formUser.invalid) {
       this.presentToast('danger', 2000, 'Dados incorretos.');
-      return; //encerra tentativa de login
+      return; //encerra envio de informações
     }
 
-    // armazena dados informados em um objeto e os passa para o método que acessa a api
+    // Armazena dados informados em um objeto e os passa para o método que acessa a api
     let userForm: User = this.formUser.getRawValue();
     userForm.id = this.userId;  // atribui ID da página ao objeto user
     this.presentLoading();
+
+    // Não enviar password como vazio
+    if(userForm.password == null || userForm.password == ""){
+      delete userForm.password;
+    }
 
     // Atualizar
     if (this.userId) {
@@ -150,6 +155,7 @@ export class UserPage implements OnInit {
     });
   }
 
+  // Realiza logout
   async logout() {
     this.authService.clearToken();
     this.router.navigate(['login']);
