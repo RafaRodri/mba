@@ -57,12 +57,7 @@
         <ion-label position="stacked" color="primary">Perfil *</ion-label>
         <ion-select [compareWith]="compareWith" value="MyDefaultAppIdValue" name="profile_id"
           formControlName="profile_id" interface="action-sheet">
-
-
-          <!--<ion-item-sliding *ngIf="user.profile_id < profileLogged || user.id == userLogged.id">-->
           <ng-container *ngFor="let profile of profiles">
-
-
             <ion-select-option *ngIf="profile.id < profileLogged || profile.id == profileLogged" [value]="profile.id">
               {{ profile.titulo }}
             </ion-select-option>

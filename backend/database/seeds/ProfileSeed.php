@@ -15,13 +15,13 @@ class ProfileSeed extends Seeder
     public function run()
     {
         App\Profile::create([
-            'titulo' => 'usuário comum',
+            'titulo' => 'Usuário Comum',
         ]);
         App\Profile::create([
-            'titulo' => 'gestor',
+            'titulo' => 'Gestor',
         ]);
         App\Profile::create([
-            'titulo' => 'admin',
+            'titulo' => 'Admin',
         ]);
     }
 }
