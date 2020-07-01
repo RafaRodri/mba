@@ -41,7 +41,7 @@ export class UserPage implements OnInit {
       cpf: new FormControl('', [Validators.required]),
       rg: new FormControl(''),
       data_nascimento: new FormControl(''),
-      profile_id: new FormControl('', [Validators.required]),
+      profile: new FormControl('', [Validators.required]),
       apps: new FormControl([]),
       password: new FormControl('')
     });
@@ -148,12 +148,20 @@ export class UserPage implements OnInit {
     this.userService.getUserById(userId).subscribe((result: User) => {
       this.userFind = result;
       this.formUser.reset(this.userFind);
+      //this.formUser.get('profile_id').setValue(this.userFind.profile.id);
+      console.log(this.userFind);
     }, (error) => {
       this.presentToast('danger', 2000, 'Registro não foi encontrado.');
       this.router.navigate(['home']);
       return;
     });
   }
+
+  compareWithFn = (o1: Profile, o2: Profile) => {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  };
+
+  compareWith = this.compareWithFn;
 
   // Realiza logout
   async logout() {

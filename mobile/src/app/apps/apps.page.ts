@@ -17,6 +17,7 @@ import { AuthService } from '../services/auth.service';
 export class AppsPage implements OnInit {
 
   apps: App[] = [];
+  loading: boolean = true;
 
   constructor(private alertController: AlertController, private router: Router,
     private toastController: ToastController, private appService: AppService, private authService: AuthService) { }
@@ -27,6 +28,7 @@ export class AppsPage implements OnInit {
   ionViewDidEnter() {
     this.appService.getApps().subscribe((result) => {
       this.apps = result;
+      this.loading = false;
     }, (error) => {
       this.presentToast('danger', 2000, 'Nenhum registro encontrado.');
     });
@@ -40,7 +42,7 @@ export class AppsPage implements OnInit {
   }
 
   // Clique no botão "apagar"
-  async deleteConfirm(id: number) {
+  async deleteConfirm(app: App) {
     const alert = await this.alertController.create({
       header: 'Espera!',
       subHeader: 'Realmente quer excluir esse registro?',
@@ -51,7 +53,8 @@ export class AppsPage implements OnInit {
         }, {
           text: 'Confirmar',
           handler: () => {
-            this.appService.deleteApp(id).subscribe((result) => {
+            this.appService.deleteApp(app.id).subscribe((result) => {
+              this.apps.splice(this.apps.indexOf(app), 1);
               this.presentToast('success', 2000, 'App removido com sucesso.');
             }, (error) => {
               this.presentToast('danger', 2000, 'Ocorreu um erro inesperado. <br>Tente novamente.');

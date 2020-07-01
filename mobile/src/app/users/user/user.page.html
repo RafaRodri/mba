@@ -55,13 +55,17 @@
       <!-- Perfil -->
       <ion-item>
         <ion-label position="stacked" color="primary">Perfil *</ion-label>
-        <ion-select [compareWith]="compareWith" value="MyDefaultAppIdValue" name="profile_id"
-          formControlName="profile_id" interface="action-sheet">
-          <ng-container *ngFor="let profile of profiles">
-            <ion-select-option *ngIf="profile.id < profileLogged || profile.id == profileLogged" [value]="profile.id">
+        <!--
+        <ion-select formControlName="profile_id">
+          <ion-select-option *ngFor="let profile of profiles" [value]="profile.id">
+        -->
+        <ion-select [compareWith]="compareWith" formControlName="profile">
+          <ion-select-option *ngFor="let profile of profiles" [value]="profile">
+            {{ profile.titulo }}
+          </ion-select-option>
+          <!--<ion-select-option *ngIf="profile.id < profileLogged || profile.id == profileLogged" [value]="profile.id">
               {{ profile.titulo }}
-            </ion-select-option>
-          </ng-container>
+            </ion-select-option>-->
         </ion-select>
       </ion-item>
 
